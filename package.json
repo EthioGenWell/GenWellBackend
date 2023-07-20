@@ -18,6 +18,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.0",
+    "tsc": "^2.0.4",
     "typescript": "^5.1.6"
   },
   "dependencies": {
@@ -26,7 +27,6 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongodb": "^5.7.0",
-    "ts-node": "^10.9.1",
-    "tsc": "^2.0.4"
+    "ts-node": "^10.9.1"
   }
 }
