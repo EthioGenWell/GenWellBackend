@@ -1,18 +1,16 @@
 import { MongoClient, ServerApiVersion, type MongoClient } from 'mongodb';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../../config/default';
 
 export const connectDB = async (dbName: string) => {
-  const USERNAME = process.env.MONGO_USERNAME;
-  const PASSWORD = process.env.MONGO_PASSWORD;
-  const HOST = process.env.MONGO_DB_HOST;
+  const USERNAME = config.db.username;
+  const PASSWORD = config.db.password;
+  const HOST = config.db.password;
 
   const uri =
     'mongodb+srv://' + USERNAME + ':' + PASSWORD + '@' + HOST + '/?retryWrites=true&w=majority';
 
   // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-  export const client: MongoClient = new MongoClient(uri, {
+  const client: MongoClient = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
@@ -28,8 +26,6 @@ export const connectDB = async (dbName: string) => {
     console.log('Pinged your deployment. You successfully connected to MongoDB!');
   } catch (error) {
     console.log(error.message);
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
   }
+  return client;
 };
