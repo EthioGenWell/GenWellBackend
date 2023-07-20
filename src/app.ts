@@ -1,37 +1,32 @@
-import express, { Express } from 'express';
-import mongoose, { ConnectOptions } from 'mongoose';
-const cookieParser = require('cookie-parser');
-import cors from 'cors';
-import helmet from 'helmet';
-import bodyParser from 'body-parser';
-import authRouter from './routes/auth/auth.router';
-import questionRouter from './routes/posts/post.router';
-//import { authenticateUser } from './routes/auth/auth.middleware';
-const {validateToken}= require("./modules/JWT")
+import { MongoClient, ServerApiVersion } from 'mongodb';
+import dotenv from 'dotenv';
 
-import config from '../config/default';
+dotenv.config();
 
-const dbUrl = config.db.dbUrl;
+const uri =
+  'mongodb+srv://yabuman46:' +
+  process.env.MONGO_DB_PASSWORD +
+  '@cluster0.vt0we0o.mongodb.net/?retryWrites=true&w=majority';
 
-const app: Express = express();
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
 
-app.use(cookieParser());
-
-mongoose
-  .connect(dbUrl, { useNewUrlParser: true } as ConnectOptions)
-  .then((res) => {
-    console.log('Connected to db');
-  })
-  .catch((err) => {
-    console.log('Error while connecting to db' + err);
-  });
-
-app.use(cors()); // To enable access to this api from a different URL than the server this app is running
-app.use(helmet()); //For additional security measures provided by this library
-app.use(bodyParser.json()); //To enable the submitting of json to this application
-app.use(bodyParser.urlencoded({ extended: true })); //To enable the submitting of urlencoded data like the get request
-
-app.use('/api/v1/auth', authRouter);
-app.use('/api/questions', validateToken, questionRouter);
-
-export default app;
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db('admin').command({ ping: 1 });
+    console.log('Pinged your deployment. You successfully connected to MongoDB!');
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
