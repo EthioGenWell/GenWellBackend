@@ -3,10 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const USERNAME = process.env.MONGO_USERNAME;
+const PASSWORD = process.env.MONGO_PASSWORD;
+const HOST = process.env.MONGO_DB_HOST;
+
 const uri =
-  'mongodb+srv://yabuman46:' +
-  process.env.MONGO_DB_PASSWORD +
-  '@cluster0.vt0we0o.mongodb.net/?retryWrites=true&w=majority';
+  'mongodb+srv://' + USERNAME + ':' + PASSWORD + '@' + HOST + '/?retryWrites=true&w=majority';
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
