@@ -1,10 +1,11 @@
-import { MongoClient, ServerApiVersion, type MongoClient } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 import config from '../../config/default';
 
 export const connectDB = async (dbName: string) => {
   const USERNAME = config.db.username;
   const PASSWORD = config.db.password;
-  const HOST = config.db.password;
+  const HOST = config.db.host;
+  let db;
 
   const uri =
     'mongodb+srv://' + USERNAME + ':' + PASSWORD + '@' + HOST + '/?retryWrites=true&w=majority';
@@ -21,11 +22,14 @@ export const connectDB = async (dbName: string) => {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    db = client.db(dbName);
+
+    await db.command({ ping: 1 });
     // Send a ping to confirm a successful connection
-    await client.db(dbName).command({ ping: 1 });
     console.log('Pinged your deployment. You successfully connected to MongoDB!');
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
-  return client;
+  return db;
 };
