@@ -15,6 +15,7 @@ const dev = {
     username: process.env.MONGO_USERNAME,
     password: process.env.MONGO_PASSWORD,
     host: process.env.MONGO_DB_HOST || 'localhost',
+    dbName: process.env.DB_NAME,
   },
 };
 
