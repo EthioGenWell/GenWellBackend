@@ -12,9 +12,9 @@ const dev = {
     NODE_ENV: process.env.NODE_ENV,
   },
   db: {
-    username = process.env.MONGO_USERNAME,
-    password = process.env.MONGO_PASSWORD,
-    host = process.env.MONGO_DB_HOST || 'localhost',
+    username: process.env.MONGO_USERNAME,
+    password: process.env.MONGO_PASSWORD,
+    host: process.env.MONGO_DB_HOST || 'localhost',
   },
 };
 

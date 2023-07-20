@@ -1,8 +1,9 @@
-import app from './app.ts';
+import app from './app';
 import config from '../config/default';
 
-const port = config.app.port;
+const PORT = config.app.port;
+console.log(PORT);
 
-app.listen(port, () => {
-  `Server started 🚀 on port ${PORT}`;
+app.listen(PORT, () => {
+  console.log(`Server started 🚀 on port ${PORT}`);
 });

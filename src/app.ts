@@ -1,10 +1,9 @@
-import express from 'express';
-import type { Express } from '@types/express';
+import express, { Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 
-const app: Express = new express();
+const app: Express = express();
 
 app.use(cors()); // To enable access to this api from a different URL than the server this app is running
 app.use(helmet()); //For additional security measures provided by this library

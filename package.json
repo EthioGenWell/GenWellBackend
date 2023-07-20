@@ -5,12 +5,13 @@
   "author": "Yab",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/app.ts",
+    "start": "nodemon src/index.ts",
     "lint": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "format": "prettier 'src/**/*.ts' --write"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.13",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "eslint": "^8.45.0",
