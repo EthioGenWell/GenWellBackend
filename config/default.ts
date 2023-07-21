@@ -12,6 +12,7 @@ const dev = {
     password: process.env.MONGO_PASSWORD,
     host: process.env.MONGO_DB_HOST || 'localhost',
     dbName: process.env.DB_NAME,
+    dbUrl: process.env.DB_URL || 'mongodb://localhost/EthioGenWell',
   },
 };
 

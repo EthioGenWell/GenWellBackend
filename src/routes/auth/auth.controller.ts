@@ -1,24 +1,27 @@
 import { Request, Response } from 'express';
-import { connectDB } from '../../lib/utils';
-import config from '../../../config/default';
+import { userDoc } from '../../modules/user';
+import bcrypt from 'bcrypt';
+import User from '../../modules/user';
 
 export async function htmlRegisterUser(req: Request, res: Response) {
-  const dbName: string = config.db.dbName || '';
+  const { email, password } = req.body;
 
-  try {
-    const db = await connectDB(dbName);
-    const users = db?.collection('Users');
-    const user = req.body;
-    console.log(user);
-
-    const index = await users?.indexExists('email_1');
-    if (!index) {
-      await users?.createIndex({ email: 1 }, { unique: true });
-    }
-
-    const result = await users?.insertOne(user);
-    return res.status(201).json({ success: true, data: result });
-  } catch (error) {
-    return res.status(404).json({ success: false, message: error });
-  }
+  User.find({ email: email })
+    .then(async (foundUser: userDoc | null) => {
+      if (Array.isArray(foundUser) && foundUser.length === 0) {
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        const user = new User({
+          email: email,
+          password: hashedPassword,
+        });
+        await user.save();
+        res.status(200).json({ success: true, message: 'User created successfully' });
+      } else {
+        res.status(400).json({ success: false, error: 'user already exists' });
+      }
+    })
+    .catch((err: Error) => {
+      console.log(err);
+      res.status(404).json({ success: false, error: err });
+    });
 }
