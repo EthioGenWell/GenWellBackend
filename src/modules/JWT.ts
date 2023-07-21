@@ -12,4 +12,9 @@ const createTokens= (user: userDoc)=>{
         return accessToken;
 };
 
+//
+
+// validating tokens will be performed here
+
+//
 module.exports ={createTokens};
