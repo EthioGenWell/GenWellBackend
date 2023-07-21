@@ -27,3 +27,9 @@ export async function htmlRegisterUser(req: Request, res: Response) {
       res.status(404).json({ success: false, error: err });
     });
 }
+
+
+export async function htmlLoginUser(req: Request, res: Response) {
+  
+}
+
