@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { userDoc } from '../../modules/user';
 import User from '../../modules/user';
+const {createTokens}= require("../../modules/JWT")
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
+const cookieParser= require("cookie-parser");
 
 export async function htmlRegisterUser(req: Request, res: Response) {
   const { email, password } = req.body;
@@ -31,6 +33,7 @@ export async function htmlRegisterUser(req: Request, res: Response) {
 
 export async function htmlLoginUser(req: Request, res: Response) {
   const { email, password } = req.body;
+  // var user: userDoc | Array= await User.find({ email: email });
 
   User.find({ email: email })
     .then(async (foundUser) => {
@@ -48,6 +51,11 @@ export async function htmlLoginUser(req: Request, res: Response) {
                             res.status(400).json({success: false, error: "password didnt match"})
                         } else {
                             // Valid login credentials
+                            const accessToken= createTokens(foundUser);
+
+                            res.cookie("access-token", accessToken,
+                            {maxAge: 60*60*24*30*1000 })
+
                             res.json({success: true })
                         }
                       });
