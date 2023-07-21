@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { userDoc } from '../../modules/user';
 import User from '../../modules/user';
-import bcrypt from 'bcrypt';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const bcrypt = require('bcrypt');
 
 export async function htmlRegisterUser(req: Request, res: Response) {
   const { email, password } = req.body;
