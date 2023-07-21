@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { userDoc } from '../../modules/user';
 import User from '../../modules/user';
+import { trusted } from 'mongoose';
 const {createTokens}= require("../../modules/JWT")
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -54,7 +55,7 @@ export async function htmlLoginUser(req: Request, res: Response) {
                             const accessToken= createTokens(foundUser);
 
                             res.cookie("access-token", accessToken,
-                            {maxAge: 60*60*24*30*1000 })
+                            {maxAge: 60*60*24*30*1000, httpOnly:true })
 
                             res.json({success: true })
                         }
