@@ -34,14 +34,9 @@ const validateToken= (req: Request,res: Response,next: NextFunction)=>{
   try {
     const validToken= verify(accessToken, "a secret to be replaced by dotenv")
     if (validToken)
-    {
-
-
-         
+    {         
         req.user= validToken
         req.authenticated= true
-
-       console.log(validToken);
     return next();
   }
   } catch (error) {
