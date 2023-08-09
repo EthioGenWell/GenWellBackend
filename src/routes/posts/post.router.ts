@@ -13,12 +13,12 @@ const questionRouter = express.Router();
 questionRouter.post('/', createQuestion);
 
 // POST /api/questions/:questionId/comments
-questionRouter.post('/:questionId/comments', validateToken, addComment);
+questionRouter.post('/:questionId/comments', addComment);
 
 // POST /api/questions/:questionId/comments/:commentId/upvote
-questionRouter.post('/:questionId/comments/:commentId/upvote',validateToken, addUpvote);
+questionRouter.post('/:questionId/comments/:commentId/upvote', addUpvote);
 
 // POST /api/questions/:questionId/comments/:commentId/downvote
-questionRouter.post('/:questionId/comments/:commentId/downvote',validateToken, addDownvote);
+questionRouter.post('/:questionId/comments/:commentId/downvote', addDownvote);
 
 export default questionRouter;
