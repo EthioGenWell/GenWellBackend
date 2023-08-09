@@ -12,8 +12,11 @@ declare global {
   }
 
 const createTokens= (user: userDoc)=>{
+    
+
     const accessToken= sign(
-        {email:user.email}, 
+        
+        {email:user.email, _id: user._id}, 
         "a secret to be replaced by dotenv"
         );
 
@@ -32,9 +35,13 @@ const validateToken= (req: Request,res: Response,next: NextFunction)=>{
     const validToken= verify(accessToken, "a secret to be replaced by dotenv")
     if (validToken)
     {
+
+
+         
+        req.user= validToken
         req.authenticated= true
-        
-      console.log("authenticated");
+
+       console.log(validToken);
     return next();
   }
   } catch (error) {
