@@ -78,3 +78,24 @@ export async function addUpvote(req: Request, res: Response) {
   }
 }
 
+// POST /api/questions/:questionId/comments/:commentId/downvote
+export async function addDownvote(req: Request, res: Response) {
+  const { commentId } = req.params;
+
+  try {
+    // Find the comment to downvote
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      return res.status(404).json({ success: false, error: 'Comment not found' });
+    }
+
+    // Increment downvote count
+    comment.downvotes += 1;
+    await comment.save();
+
+    res.json({ success: true, message: 'Comment downvoted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Failed to downvote comment' });
+  }
+}
