@@ -6,8 +6,8 @@ export interface userDoc extends Document {
 }
 
 const userSchema = new mongoose.Schema({
-  email: { type: String, unique: true },
-  password: String,
+  email: { type: String, unique: true, required: true },
+  password:{type: String, required: true} 
 });
 
 const User = mongoose.model('Users', userSchema);

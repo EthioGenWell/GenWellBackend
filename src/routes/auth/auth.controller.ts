@@ -52,10 +52,9 @@ export async function htmlLoginUser(req: Request, res: Response) {
                             res.status(400).json({success: false, error: "password didnt match"})
                         } else {
                             // Valid login credentials
-                            const accessToken= createTokens(foundUser);
-
+                            const accessToken= createTokens(foundUser[0]);
                             res.cookie("access-token", accessToken,
-                            {maxAge: 60*60*24*30*1000, httpOnly:true })
+                            {maxAge: 60*60*24*30*1000, httpOnly:true, path: '/' });
 
                             res.json({success: true })
                         }
